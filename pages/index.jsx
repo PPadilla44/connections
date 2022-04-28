@@ -74,7 +74,7 @@ export default function Home() {
         Object.entries(points).map((p) => (
           <button
             onClick={() => connectClick(p)} key={p[0]}
-            className={`active:bg-red-600 ${first && first[0] === p[0] && 'bg-red-600'} z-20  h-4 w-4 absolute bg-black rounded-full`}
+            className={`active:bg-red-600 ${first && first[0] === p[0] ? 'bg-red-600' : 'bg-black'} z-20  h-4 w-4 absolute rounded-full`}
             style={{ left: p[1].x, top: p[1].y }}>
             <span className="absolute top-3">{p[0]}</span>
           </button>
