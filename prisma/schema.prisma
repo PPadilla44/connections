@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model dots {
+  id       Int    @id @default(autoincrement())
+  sequence Int
+  x        Int
+  y        Int
+  levelId  Int
+  levels   levels @relation(fields: [levelId], references: [id], onDelete: Cascade, map: "fk_dots_levels")
+
+  @@index([levelId], map: "fk_dots_levels_idx")
+}
+
+model levels {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  difficulty Int       @db.TinyInt
+  linesToWin Int
+  createdAt  DateTime? @default(now()) @db.DateTime(0)
+  updatedAt  DateTime? @default(now()) @db.DateTime(0)
+  dots       dots[]
+  scores     scores[]
+}
+
+model scores {
+  id        Int       @id @default(autoincrement())
+  time      String    @db.VarChar(255)
+  levelId   Int
+  userId    Int
+  createdAt DateTime? @default(now()) @db.DateTime(0)
+  levels    levels    @relation(fields: [levelId], references: [id], onDelete: Cascade, map: "fk_scores_levels1")
+  users     users     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "fk_scores_users1")
+
+  @@index([levelId], map: "fk_scores_levels1_idx")
+  @@index([userId], map: "fk_scores_users1_idx")
+}
+
+model users {
+  id        Int       @id @default(autoincrement())
+  userName  String    @db.VarChar(255)
+  email     String    @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  avatar    String?   @db.VarChar(255)
+  createdAt DateTime? @default(now()) @db.DateTime(0)
+  updatedAt DateTime? @default(now()) @db.DateTime(0)
+  scores    scores[]
+}

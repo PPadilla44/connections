@@ -2,13 +2,24 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First install dependecies 
+Install dependecies 
 
 ```bash
 yarn install
 ```
 
-Then, run the development server:
+copy .env.example with command (windows) and update info
+```
+copy .env.example .env
+```
+
+add schema to local host then seed data
+```bash
+npx prisma db push
+npx prisma db seed
+```
+
+Run the development server:
 
 ```bash
 yarn dev
