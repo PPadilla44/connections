@@ -78,3 +78,4 @@ const points = {
     77: { x: 204, y: 177 }
 }
 
+const win = 76;
