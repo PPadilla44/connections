@@ -2,13 +2,18 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First install dependecies 
+Install dependecies 
 
 ```bash
 yarn install
 ```
+Seed db to remove users and add new ones
 
-Then, run the development server:
+```bash
+npx prisma db seed
+```
+
+Run the development server:
 
 ```bash
 yarn dev
