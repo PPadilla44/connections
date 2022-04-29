@@ -7,8 +7,11 @@ Install dependecies
 ```bash
 yarn install
 ```
-Seed db to remove users and add new ones
+```
+create .env file with DATABASE_URL & JWT_SECRET
+```
 
+Seed db to remove users and add new ones
 ```bash
 npx prisma db seed
 ```
