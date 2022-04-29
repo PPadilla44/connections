@@ -25,6 +25,7 @@ model Dot {
   id      Int   @id @default(autoincrement())
   level   Level @relation(fields: [levelId], references: [id])
   levelId Int   @unique
+  sequenceId Int
   x Int
   y Int
 }

@@ -8,7 +8,13 @@ const handler = nc();
 
 handler.get(async (req, res) => {
 
-    const allUsers = await prisma.user.findMany();
+    const { score } = req.query;
+
+    const allUsers = await prisma.user.findMany({
+        include: {
+            Score: score === "true" ? true : false,
+        }
+    });
     
     res.send(allUsers)
 })
