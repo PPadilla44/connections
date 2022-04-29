@@ -1,9 +1,10 @@
+import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
-const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient();
 
-const handler = nc();
+const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.get(async (req, res) => {
 
@@ -34,7 +35,7 @@ handler.post(async (req, res) => {
             linesToWin: parseInt(linesToWin)
         }
     });
-    
+
     res.send(createdLevel);
 })
 

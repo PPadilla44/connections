@@ -1,17 +1,18 @@
+import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
-const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient();
 
-const handler = nc();
+const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.get(async (req, res) => {
 
-    const { scores, dots } = req.query;
+    const { scores, dots, id } = req.query;
 
     const level = await prisma.levels.findFirst({
         where: {
-            id: parseInt(req.query.id)
+            id: parseInt(id as string)
         },
         include: {
             scores: scores === "true" ? true : false,
@@ -24,16 +25,18 @@ handler.get(async (req, res) => {
 
 handler.delete(async (req, res) => {
 
+    const { id } = req.query;
+
     const level = await prisma.levels.findFirst({
         where: {
-            id: parseInt(req.query.id)
+            id: parseInt(id as string)
         }
     });
 
     if (level) {
         await prisma.levels.delete({
             where: {
-                id: parseInt(req.query.id)
+                id: parseInt(id as string)
             }
         });
         res.send({ msg: 'Level Deleted' })
