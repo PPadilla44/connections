@@ -1,5 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcryptjs');
+import { PrismaClient } from "@prisma/client";
+import { hashSync } from "bcryptjs"
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -11,13 +12,13 @@ async function main() {
             {
                 email: 'john@example.com',
                 userName: 'john',
-                password: bcrypt.hashSync("123456"),
+                password: hashSync("123456"),
 
             },
             {
                 email: 'alice@example.com',
                 userName: 'alice',
-                password: bcrypt.hashSync("123456"),
+                password: hashSync("123456"),
             },
         ]
     })

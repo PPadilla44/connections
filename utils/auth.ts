@@ -1,10 +1,11 @@
+import { users } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
-const signToken = (user) => {
+const signToken = (user: users) => {
     return jwt.sign(
         {
-            id: user._id,
-            userName: user.name,
+            id: user.id,
+            userName: user.userName,
             email: user.email,
         },
         process.env.JWT_SECRET ? process.env.JWT_SECRET : "",

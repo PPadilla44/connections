@@ -1,19 +1,20 @@
 import nc from "next-connect";
-import bcrpyt from "bcryptjs"
+import { hashSync } from "bcryptjs"
 import { signToken } from "../../../utils/auth";
-const { PrismaClient } = require('@prisma/client')
+import { Prisma, PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-const handler = nc();
+const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.post(async (req, res) => {
     const { userName, email, password } = req.body;
 
-    const userData = {
+    const userData: Prisma.usersCreateInput = {
         userName,
         email,
-        password: bcrpyt.hashSync(password),
+        password: hashSync(password),
     }
 
     const existingUser = await prisma.users.findFirst({
@@ -24,7 +25,6 @@ handler.post(async (req, res) => {
             ],
         }
     })
-
     if (existingUser) {
 
         res.send({
