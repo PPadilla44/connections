@@ -7,37 +7,38 @@ const handler = nc();
 
 handler.get(async (req, res) => {
 
-    const { scores } = req.query;
+    const { scores, dots } = req.query;
 
-    const user = await prisma.users.findFirst({
+    const level = await prisma.levels.findFirst({
         where: {
             id: parseInt(req.query.id)
         },
         include: {
             scores: scores === "true" ? true : false,
+            dots: dots === "true" ? true : false
         }
     });
 
-    res.send(user)
+    res.send(level)
 });
 
 handler.delete(async (req, res) => {
 
-    const user = await prisma.users.findFirst({
+    const level = await prisma.levels.findFirst({
         where: {
             id: parseInt(req.query.id)
         }
     });
 
-    if (user) {
-        await prisma.users.delete({
+    if (level) {
+        await prisma.levels.delete({
             where: {
                 id: parseInt(req.query.id)
             }
         });
-        res.send({ msg: 'User Deleted' })
+        res.send({ msg: 'Level Deleted' })
     } else {
-        res.status(404).send({ msg: "User Not Found" })
+        res.status(404).send({ msg: "Level Not Found" })
     }
 
 })

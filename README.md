@@ -7,12 +7,15 @@ Install dependecies
 ```bash
 yarn install
 ```
+
+copy .env.example with command (windows) and update info
 ```
-create .env file with DATABASE_URL & JWT_SECRET
+copy .env.example .env
 ```
 
-Seed db to remove users and add new ones
+add schema to local host then seed data
 ```bash
+npx prisma db push
 npx prisma db seed
 ```
 

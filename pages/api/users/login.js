@@ -12,7 +12,7 @@ handler.post(async (req, res) => {
 
     const { userName, email, password } = req.body;
 
-    const user = await prisma.user.findFirst({
+    const user = await prisma.users.findFirst({
         where: {
             OR: [
                 { userName: userName },
