@@ -1,7 +1,7 @@
-import React from 'react'
-import {useState} from 'react'
+import React, {useState} from 'react'
 
-export default function level_creator() {
+
+export default function LevelCreator() {
   const [dots, setDots] = useState({})
   const [i, setI] = useState(1)
 
