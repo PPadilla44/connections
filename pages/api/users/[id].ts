@@ -1,17 +1,18 @@
+import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
-const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient();
 
-const handler = nc();
+const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.get(async (req, res) => {
 
-    const { scores } = req.query;
+    const { scores, id } = req.query;
 
     const user = await prisma.users.findFirst({
         where: {
-            id: parseInt(req.query.id)
+            id: parseInt(id as string)
         },
         include: {
             scores: scores === "true" ? true : false,
@@ -23,16 +24,18 @@ handler.get(async (req, res) => {
 
 handler.delete(async (req, res) => {
 
+    const { id } = req.query;
+
     const user = await prisma.users.findFirst({
         where: {
-            id: parseInt(req.query.id)
+            id: parseInt(id as string)
         }
     });
 
     if (user) {
         await prisma.users.delete({
             where: {
-                id: parseInt(req.query.id)
+                id: parseInt(id as string)
             }
         });
         res.send({ msg: 'User Deleted' })
