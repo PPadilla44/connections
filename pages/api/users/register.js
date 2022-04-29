@@ -16,7 +16,7 @@ handler.post(async (req, res) => {
         password: bcrpyt.hashSync(password),
     }
 
-    const existingUser = await prisma.user.findFirst({
+    const existingUser = await prisma.users.findFirst({
         where: {
             OR: [
                 { userName: userName },
@@ -33,7 +33,7 @@ handler.post(async (req, res) => {
 
     } else {
 
-        const newUser = await prisma.user.create({
+        const newUser = await prisma.users.create({
             data: userData
         })
 

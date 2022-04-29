@@ -1,5 +1,4 @@
 import nc from "next-connect";
-import bcrpyt from "bcryptjs"
 const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient();
@@ -8,12 +7,12 @@ const handler = nc();
 
 handler.get(async (req, res) => {
 
-    const { score, dot } = req.query;
+    const { scores, dots } = req.query;
 
-    const allLevels = await prisma.level.findMany({
+    const allLevels = await prisma.levels.findMany({
         include: {
-            Score: score === "true" ? true : false,
-            Dot: dot === "true" ? true : false
+            scores: scores === "true" ? true : false,
+            dots: dots === "true" ? true : false
         }
     });
 
@@ -28,14 +27,14 @@ handler.post(async (req, res) => {
         linesToWin,
     } = req.body;
 
-    const createdLevel = await prisma.level.create({
+    const createdLevel = await prisma.levels.create({
         data: {
             name,
             difficulty: parseInt(difficulty),
             linesToWin: parseInt(linesToWin)
         }
     });
-    console.log(createdLevel);
+    
     res.send(createdLevel);
 })
 
