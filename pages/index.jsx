@@ -1,6 +1,7 @@
 import { useState } from "react"
+import Layout from "../components/Layout"
 
-export default function Home() {
+export default function Home({ isLoggedIn }) {
 
   const [first, setFirst] = useState(null);
 
@@ -28,7 +29,7 @@ export default function Home() {
     21: { x: 938, y: 90 },
     22: { x: 860, y: 120 },
     23: { x: 803, y: 176 },
-    24: { x: 752, y: 282 },  
+    24: { x: 752, y: 282 },
     25: { x: 764, y: 355 },
     26: { x: 720, y: 432 },
     27: { x: 780, y: 468 },
@@ -82,9 +83,9 @@ export default function Home() {
     75: { x: 86, y: 212 },
     76: { x: 147, y: 201 },
     77: { x: 204, y: 177 }
-}
+  }
 
-const win = 76;
+  const win = 76;
 
   const [lines, setLines] = useState([])
 
@@ -142,35 +143,46 @@ const win = 76;
   }
 
   return (
-    <div className="bg-blue-200 h-screen flex relative">
-      {
-        Object.entries(points).map((p) => (
-          <button
-            onClick={() => connectClick(p)} key={p[0]}
-            className={`active:bg-red-600 ${first && first[0] === p[0] ? 'bg-red-600' : 'bg-black'} z-20  h-4 w-4 absolute rounded-full`}
-            style={{ left: p[1].x, top: p[1].y }}>
-            <span className="absolute top-3">{p[0]}</span>
-          </button>
-        ))
-      }
-      <svg className="absolute w-full h-full  z-10">
-
+    <Layout title="Dashboard" isLoggedIn={isLoggedIn}>
+      <div className="bg-blue-200 h-screen flex relative">
         {
-          lines.map((l, i) => (
-            <line
-              key={l.id}
-              x1={l.x1}
-              y1={l.y1}
-              x2={l.x2}
-              y2={l.y2}
-              stroke="black"
-            />
+          Object.entries(points).map((p) => (
+            <button
+              onClick={() => connectClick(p)} key={p[0]}
+              className={`active:bg-red-600 ${first && first[0] === p[0] ? 'bg-red-600' : 'bg-black'} z-20  h-4 w-4 absolute rounded-full`}
+              style={{ left: p[1].x, top: p[1].y }}>
+              <span className="absolute top-3">{p[0]}</span>
+            </button>
           ))
         }
-      </svg>
+        <svg className="absolute w-full h-full  z-10">
 
-    </div>
+          {
+            lines.map((l, i) => (
+              <line
+                key={l.id}
+                x1={l.x1}
+                y1={l.y1}
+                x2={l.x2}
+                y2={l.y2}
+                stroke="black"
+              />
+            ))
+          }
+        </svg>
+
+      </div>
+    </Layout>
 
   )
 }
 
+export const getServerSideProps = async (context) => {
+  const cookies = context.req.cookies;
+
+  return {
+    props: {
+      isLoggedIn : cookies.userInfo ? true : false
+    },
+  };
+};

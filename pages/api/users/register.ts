@@ -27,8 +27,8 @@ handler.post(async (req, res) => {
     })
     if (existingUser) {
 
-        res.send({
-            msg: "user already exisyts"
+        res.status(409).send({
+            msg: "User already exists"
         })
 
     } else {
