@@ -7,6 +7,7 @@ export default function LevelCreator({isLoggedIn}) {
   const [i, setI] = useState(1)
 
   const clickHandler = (e) => {
+    console.log(e)
     let temp = dots;
     temp[i] = { x: e.pageX, y: e.pageY }
     setDots(temp)
@@ -34,7 +35,7 @@ export default function LevelCreator({isLoggedIn}) {
             key={p[0]}
             id={p[0]}
             className={`active:bg-red-600 z-20 bg-black h-4 w-4 absolute rounded-full`}
-            style={{ left: p[1].x, top: p[1].y }}>
+            style={{ left: p[1].x, top: p[1].y-64 }}>
             <span className="absolute top-3">{p[0]}</span>
           </button>
         ))}
