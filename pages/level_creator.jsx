@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../components/Layout';
 
 
-export default function LevelCreator({isLoggedIn}) {
+export default function LevelCreator({ isLoggedIn }) {
   const [dots, setDots] = useState({})
   const [i, setI] = useState(1)
 
@@ -14,6 +14,21 @@ export default function LevelCreator({isLoggedIn}) {
     setI(++i)
   }
 
+  const handlePress = (e) => {
+    if (e.code == "KeyZ" && e.ctrlKey == true){
+      undo();
+    }
+    console.log(e)
+  }
+
+  useEffect(() => {
+    window.addEventListener("keypress", handlePress)
+  
+    return () => {
+      window.removeEventListener("keypress", handlePress)
+    }
+  }, [i])
+  
   const undo = () => {
     let toRemove = i - 1
     let temp = dots;
@@ -35,7 +50,7 @@ export default function LevelCreator({isLoggedIn}) {
             key={p[0]}
             id={p[0]}
             className={`active:bg-red-600 z-20 bg-black h-4 w-4 absolute rounded-full`}
-            style={{ left: p[1].x, top: p[1].y-64 }}>
+            style={{ left: p[1].x, top: p[1].y - 64 }}>
             <span className="absolute top-3">{p[0]}</span>
           </button>
         ))}
@@ -51,7 +66,7 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      isLoggedIn : cookies.userInfo ? true : false
+      isLoggedIn: cookies.userInfo ? true : false
     },
   };
 };
