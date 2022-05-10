@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ title, description, children, isLoggedI
         {description && <meta name="description" content={description} />}
       </Head>
       <Navbar route={router.route} isLoggedIn={isLoggedIn} />
-      <div className="mt-16">{children}</div>
+      <div className="mt-12">{children}</div>
     </div>
   );
 };
