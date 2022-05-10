@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldError, Path, UseFormRegister, ValidationRule } from "react-hook-form";
+import { UseFormRegister, ValidationRule } from "react-hook-form";
 
 interface InputProps {
   name: string;
