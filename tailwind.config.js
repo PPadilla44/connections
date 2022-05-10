@@ -4,7 +4,18 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dom: '#F7BD3B',
+        secondary: '#18253B',
+        darkBlue: '#0C1019',
+        danger: '#BB0000',
+        brightblue: '#0093FF'
+      },
+      fontFamily: {
+        spartan: ["League Spartan", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 }

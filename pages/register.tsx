@@ -51,9 +51,9 @@ const Register = () => {
 
   return (
     <Layout title="Register" isLoggedIn={false}>
-      <div className="w-full h-full flex justify-center">
+      <div className="w-full h-full flex justify-center bg-darkBlue">
         <div className="max-w-3xl w-full mt-12 flex flex-col gap-5">
-          <h2 className="text-5xl font-semibold">Register</h2>
+          <h2 className="text-5xl text-white font-semibold">Register</h2>
           <form onSubmit={handleSubmit(submitHandler)}>
             <ul className="gap-5 flex flex-col">
               <li>

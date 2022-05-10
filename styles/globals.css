@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Artifika&family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    html {
+        @apply font-spartan text-white
+    }
+    h1 {
+        @apply text-6xl font-semibold
+    }
+    h2 {
+        @apply text-5xl font-normal
+    }
+    h3 {
+        @apply text-3xl font-normal
+    }
+    p {
+        @apply text-2xl font-light
+    }
+}
