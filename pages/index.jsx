@@ -143,8 +143,8 @@ export default function Home({ isLoggedIn }) {
   }
 
   return (
-    <Layout title="Dashboard" isLoggedIn={isLoggedIn}>
-      <div className="bg-blue-200 h-screen flex relative">
+    <Layout title="Dashboard" >
+      <div className="bg-blue-200 h-full flex relative">
         {
           Object.entries(points).map((p) => (
             <button
@@ -176,13 +176,3 @@ export default function Home({ isLoggedIn }) {
 
   )
 }
-
-export const getServerSideProps = async (context) => {
-  const cookies = context.req.cookies;
-
-  return {
-    props: {
-      isLoggedIn : cookies.userInfo ? true : false
-    },
-  };
-};

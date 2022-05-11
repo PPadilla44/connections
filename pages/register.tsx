@@ -25,8 +25,8 @@ const Register: NextPage = () => {
   } = useForm<UserRegiser>();
 
   useEffect(() => {
-    setFocus("userName")
-  },[setFocus])
+    setFocus("userName");
+  }, [setFocus]);
 
   const [dbError, setDbError] = useState("");
 
@@ -55,8 +55,8 @@ const Register: NextPage = () => {
   };
 
   return (
-    <Layout title="Register" isLoggedIn={false}>
-      <div className="w-full h-full flex justify-center bg-darkBlue">
+    <Layout title="Register">
+      <div className="w-full flex justify-center bg-darkBlue">
         <div className="max-w-3xl w-full mt-12 flex flex-col gap-5">
           <h2>Register</h2>
           <form onSubmit={handleSubmit(submitHandler)}>
@@ -135,9 +135,12 @@ const Register: NextPage = () => {
                 />
               </li>
               <li className="flex gap-2 items-center justify-between">
-                <p className="text-xl font-extralight">
+                <p>
                   Already have an account?{" "}
-                  <Link href={redirect ? `/login?redirect=${redirect}` : `/login`} passHref>
+                  <Link
+                    href={redirect ? `/login?redirect=${redirect}` : `/login`}
+                    passHref
+                  >
                     <a className="text-dom">Login</a>
                   </Link>
                 </p>

@@ -45,8 +45,8 @@ const Login: NextPage = () => {
   };
 
   return (
-    <Layout title="Log In" isLoggedIn={false}>
-      <div className="w-full h-full flex justify-center bg-darkBlue">
+    <Layout title="Log In">
+      <div className="w-full flex justify-center bg-darkBlue">
         <div className="max-w-3xl w-full mt-12 flex flex-col gap-5">
           <h2>Log In</h2>
           <form onSubmit={handleSubmit(submitHandler)}>
@@ -89,7 +89,7 @@ const Login: NextPage = () => {
                 />
               </li>
               <li className="flex gap-2 items-center justify-between">
-                <p className="text-xl font-extralight">
+                <p>
                   {`Don't have an account?`}{" "}
                   <Link
                     href={
