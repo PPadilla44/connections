@@ -5,6 +5,11 @@ export type UserRegiser = {
     confirmPassword: string;
 };
 
+export type UserLogin = {
+    login: string;
+    password: string;
+};
+
 export type UserClientType = {
     token: string;
     userName: string;

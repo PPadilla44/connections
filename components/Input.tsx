@@ -37,8 +37,8 @@ const Input = ({
     <>
       <div
         className={`w-full border ${
-          errorMessage && "border-danger border-2"
-        } border-gray outline-none focus-within:border-dom focus-within:border-2 
+          errorMessage ? "border-danger border-2" : "border-gray"
+        }  outline-none focus-within:border-dom focus-within:border-2 
       placeholder-gray font-light  rounded-md flex items-center relative`}
       >
         <input

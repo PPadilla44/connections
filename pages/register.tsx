@@ -7,11 +7,11 @@ import { UserClientType, UserRegiser } from "../types";
 import { getError } from "../utils/error";
 import Cookies from "js-cookie";
 import { useAuth } from "../components/hooks/useAuth";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 
-const Register = () => {
+const Register: NextPage = () => {
   const { dispatch } = useAuth();
   const router = useRouter();
   const { redirect } = router.query;
@@ -137,7 +137,7 @@ const Register = () => {
               <li className="flex gap-2 items-center justify-between">
                 <p className="text-xl font-extralight">
                   Already have an account?{" "}
-                  <Link href={"/login"} passHref>
+                  <Link href={redirect ? `/login?redirect=${redirect}` : `/login`} passHref>
                     <a className="text-dom">Login</a>
                   </Link>
                 </p>
@@ -148,7 +148,7 @@ const Register = () => {
                   Register
                 </button>
               </li>
-              {dbError && <span className="text-dom">{dbError}</span>}
+              {dbError && <span className="text-danger">{dbError}</span>}
             </ul>
           </form>
         </div>

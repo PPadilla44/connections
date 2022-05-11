@@ -54,7 +54,7 @@ const Navbar: React.FC<NavbarProps> = ({ route, isLoggedIn }) => {
               >
                 <span>Log out</span>
               </button>
-              <Link href={`/register?redirect=${route}`} passHref>
+              <Link href={`/register`} passHref>
                 <button className="">
                   <Icon icon={"carbon:user-avatar"} height={33} />
                 </button>
@@ -62,12 +62,12 @@ const Navbar: React.FC<NavbarProps> = ({ route, isLoggedIn }) => {
             </>
           ) : (
             <>
-              <Link href={`/login?redirect=${route}`} passHref>
+              <Link href={`/login`} passHref>
                 <button className="font-light">
                   <a>Log in</a>
                 </button>
               </Link>
-              <Link href={`/register?redirect=${route}`} passHref>
+              <Link href={`/register`} passHref>
                 <button className="bg-dom rounded-md px-2 py-1 text-black font-normal">
                   <span>Sign up</span>
                 </button>
@@ -95,8 +95,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //         }
   //     }
   // }
-
-  console.log(cookies);
 
   return {
     props: {

@@ -17,20 +17,27 @@ handler.post(async (req, res) => {
         password: hashSync(password),
     }
 
-    const existingUser = await prisma.users.findFirst({
+    const existingUserName = await prisma.users.findFirst({
         where: {
-            OR: [
-                { userName: userName },
-                { email: email }
-            ],
+            userName: userName
         }
-    })
-    if (existingUser) {
+    });
 
+    const existingUserEmail = await prisma.users.findFirst({
+        where: {
+            email: email
+
+        }
+    });
+
+    if (existingUserName) {
         res.status(409).send({
-            msg: "User already exists"
+            msg: "Username taken"
         })
-
+    } else if (existingUserEmail) {
+        res.status(409).send({
+            msg: "Email taken"
+        })
     } else {
 
         const newUser = await prisma.users.create({
