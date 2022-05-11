@@ -1,19 +1,18 @@
 import Cookies from "js-cookie";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "./hooks/useAuth";
 import { Icon } from "@iconify/react";
 
 interface NavbarProps {
   route: string;
-  isLoggedIn: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ route, isLoggedIn }) => {
-  const { dispatch } = useAuth();
-
-  const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+const Navbar: React.FC<NavbarProps> = ({ route }) => {
+  const { state, dispatch } = useAuth();
+  const {
+    user: { isLoggedIn },
+  } = state;
 
   const routes = [
     { route: "/", name: "PRODUCTION NAME", className: "text-2xl font-normal" },
@@ -42,11 +41,10 @@ const Navbar: React.FC<NavbarProps> = ({ route, isLoggedIn }) => {
           ))}
         </ul>
         <div className="flex gap-3 items-center">
-          {loggedIn ? (
+          {isLoggedIn ? (
             <>
               <button
                 onClick={() => {
-                  setLoggedIn(false);
                   dispatch({ type: "USER_LOGOUT" });
                   Cookies.remove("userInfo");
                 }}
@@ -78,29 +76,6 @@ const Navbar: React.FC<NavbarProps> = ({ route, isLoggedIn }) => {
       </div>
     </nav>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = context.req.cookies;
-
-  // UNCOMMNET TO NOT MOUNT ROUTE IF LOGGED IN
-
-  // if (cookies.userInfo) {
-
-  //   const { redirect } = context.query;
-  //     return {
-  //         redirect: {
-  //             destination: redirect ? redirect as string : '/',
-  //             permanent: false
-  //         }
-  //     }
-  // }
-
-  return {
-    props: {
-      isLoggedIn: cookies.userInfo ? true : false,
-    },
-  };
 };
 
 export default Navbar;

@@ -26,8 +26,8 @@ export default function LevelCreator({isLoggedIn}) {
   }
 
   return (
-    <Layout title='Level Creator' isLoggedIn={isLoggedIn}>
-      <div className="bg-blue-200 h-screen flex relative">
+    <Layout title='Level Creator'>
+      <div className="bg-blue-200 flex relative">
         <div onClick={clickHandler} className="bg-orange-200 h-[645px] w-[1200px]"></div>
         {Object.entries(dots).map((p) => (
           <button
@@ -43,15 +43,3 @@ export default function LevelCreator({isLoggedIn}) {
     </Layout>
   )
 }
-
-
-export const getServerSideProps = async (context) => {
-  const cookies = context.req.cookies;
-
-  return {
-    props: {
-      isLoggedIn : cookies.userInfo ? true : false
-    },
-  };
-};
-

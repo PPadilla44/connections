@@ -9,15 +9,21 @@
         @apply font-spartan text-white
     }
     h1 {
-        @apply text-6xl font-semibold
+        @apply text-5xl font-semibold w-fit
     }
     h2 {
-        @apply text-5xl font-normal
+        @apply text-4xl font-normal w-fit
     }
     h3 {
-        @apply text-3xl font-normal
+        @apply text-3xl font-normal w-fit
+    }
+    h4 {
+        @apply text-2xl font-light w-fit
+    }
+    h5 {
+        @apply text-xl font-normal w-fit
     }
     p {
-        @apply text-2xl font-light
+        @apply text-base font-light w-fit
     }
 }
