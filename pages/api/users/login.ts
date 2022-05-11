@@ -10,13 +10,14 @@ const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.post(async (req, res) => {
 
-    const { userName, email, password } = req.body;
+    const { login, password } = req.body;
+
 
     const user = await prisma.users.findFirst({
         where: {
             OR: [
-                { userName: userName },
-                { email: email }
+                { userName: login },
+                { email: login }
             ],
         }
     })
@@ -30,7 +31,7 @@ handler.post(async (req, res) => {
             email: user.email,
         });
     } else {
-        res.status(401).send({ message: 'Invalid email or password' })
+        res.status(401).send({ msg: 'Invalid email or password' })
     }
 })
 
