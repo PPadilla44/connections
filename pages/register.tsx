@@ -1,6 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import { UserClientType, UserRegiser } from "../types";
@@ -21,7 +21,12 @@ const Register = () => {
     register,
     formState: { errors },
     setError,
+    setFocus,
   } = useForm<UserRegiser>();
+
+  useEffect(() => {
+    setFocus("userName")
+  },[setFocus])
 
   const [dbError, setDbError] = useState("");
 
@@ -53,7 +58,7 @@ const Register = () => {
     <Layout title="Register" isLoggedIn={false}>
       <div className="w-full h-full flex justify-center bg-darkBlue">
         <div className="max-w-3xl w-full mt-12 flex flex-col gap-5">
-          <h2 className="text-5xl text-white font-semibold">Register</h2>
+          <h2>Register</h2>
           <form onSubmit={handleSubmit(submitHandler)}>
             <ul className="gap-5 flex flex-col">
               <li>
@@ -130,20 +135,20 @@ const Register = () => {
                 />
               </li>
               <li className="flex gap-2 items-center justify-between">
-                <p className="">
+                <p className="text-xl font-extralight">
                   Already have an account?{" "}
                   <Link href={"/login"} passHref>
-                    <a className="text-red-900">Login</a>
+                    <a className="text-dom">Login</a>
                   </Link>
                 </p>
                 <button
-                  className="bg-red-900 w-2/3 h-14 text-white border-2 border-black"
+                  className="bg-dom max-w-md w-full h-12 text-black rounded-lg text-xl"
                   type="submit"
                 >
                   Register
                 </button>
               </li>
-              {dbError && <span className="text-red-900">{dbError}</span>}
+              {dbError && <span className="text-dom">{dbError}</span>}
             </ul>
           </form>
         </div>
@@ -158,14 +163,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // UNCOMMNET TO NOT MOUNT ROUTE IF LOGGED IN
 
   if (cookies.userInfo) {
-
     const { redirect } = context.query;
-      return {
-          redirect: {
-              destination: redirect ? redirect as string : '/',
-              permanent: false
-          }
-      }
+    return {
+      redirect: {
+        destination: redirect ? (redirect as string) : "/",
+        permanent: false,
+      },
+    };
   }
 
   return {

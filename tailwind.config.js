@@ -10,7 +10,8 @@ module.exports = {
         secondary: '#18253B',
         darkBlue: '#0C1019',
         danger: '#BB0000',
-        brightblue: '#0093FF'
+        brightblue: '#0093FF',
+        gray: '#B3B3B3'
       },
       fontFamily: {
         spartan: ["League Spartan", "sans-serif"],
