@@ -160,8 +160,6 @@ const Register: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.cookies;
 
-  // UNCOMMNET TO NOT MOUNT ROUTE IF LOGGED IN
-
   if (cookies.userInfo) {
     const { redirect } = context.query;
     return {
