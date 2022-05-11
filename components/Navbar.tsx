@@ -44,16 +44,16 @@ const Navbar: React.FC<NavbarProps> = ({ route, isLoggedIn }) => {
         <div className="flex gap-3 items-center">
           {loggedIn ? (
             <>
-              {/* <button
+              <button
                 onClick={() => {
                   setLoggedIn(false);
                   dispatch({ type: "USER_LOGOUT" });
                   Cookies.remove("userInfo");
                 }}
-                className="border-2 border-black w-20 h-10"
+                className="font-light"
               >
                 <span>Log out</span>
-              </button> */}
+              </button>
               <Link href={`/register?redirect=${route}`} passHref>
                 <button className="">
                   <Icon icon={"carbon:user-avatar"} height={33} />
