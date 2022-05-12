@@ -1,12 +1,10 @@
-import { GetServerSideProps, NextPage } from "next";
-import Link from "next/link";
+import { NextPage } from "next";
 import React from "react";
-import Layout from "../components/Layout";
-import LevelItem from "../components/LevelItem";
-import SearchBar from "../components/SearchBar";
+import Layout from "../../components/Layout";
+import LevelItem from "../../components/LevelItem";
+import SearchBar from "../../components/SearchBar";
 
-interface PlayProps {
-}
+interface PlayProps {}
 
 const pageData = [
   {
