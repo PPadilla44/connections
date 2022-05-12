@@ -14,9 +14,13 @@ interface LeaderboardItemProps {
       date: string;
     }[];
   };
+  showLeaderboardText?: boolean;
 }
 
-const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ item }) => {
+const LeaderboardItem: React.FC<LeaderboardItemProps> = ({
+  item,
+  showLeaderboardText = true,
+}) => {
   const { id, name, tableData, username } = item;
 
   return (
@@ -27,13 +31,17 @@ const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ item }) => {
           <p>by {username}</p>
         </div>
         <div className="flex gap-5 items-end">
-          <Link href={`/leaderboards/${id}`} passHref>
-            <a>
-              <p className="text-dom">Leaderboard</p>
-            </a>
-          </Link>
+          {showLeaderboardText && (
+            <Link href={`/leaderboards/${id}`} passHref>
+              <a>
+                <p className="text-dom">Leaderboard</p>
+              </a>
+            </Link>
+          )}
           <Link href={`/play/${id}`} passHref>
-            <a className="bg-dom px-3 py-1 rounded-md">
+            <a
+              className={`w-40 flex justify-center bg-dom px-3 py-1 rounded-md`}
+            >
               <p className="text-black font-normal ">Play</p>
             </a>
           </Link>
