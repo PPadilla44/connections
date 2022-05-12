@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Canvas from "../../components/Canvas";
 import Layout from "../../components/Layout";
+import LineIcon from "../../components/LineIcon";
 
 const StartModal = () => {
   return (
@@ -43,11 +44,14 @@ const PlayLevel = () => {
           <h1>{name}</h1>
           <div className="relative">
             <Canvas />
-            {/* <StartModal /> */}
-            <SubmitToLeaderBoardModal time={runningTime} id={id} />
+            <StartModal />
+            {/* <SubmitToLeaderBoardModal time={runningTime} id={id} /> */}
           </div>
           <div className="flex justify-between w-full">
-            <h3 className="w-48">{currentConnections}</h3>
+            <div className="flex gap-2 w-48">
+              <LineIcon />
+              <h3>{currentConnections}</h3>
+            </div>
             <h3 className="w-48 text-center">{runningTime}</h3>
             <button className="bg-danger w-48 rounded-md flex justify-center items-center">
               <h3>Reset</h3>
