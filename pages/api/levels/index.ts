@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
+import { NextApiRequestWithUser } from "../../../types";
+import { isAuth } from "../../../utils/auth";
 
 const prisma = new PrismaClient();
 
-const handler = nc<NextApiRequest, NextApiResponse>();
+const handler = nc<NextApiRequestWithUser, NextApiResponse>();
 
 handler.get(async (req, res) => {
 
@@ -20,6 +22,8 @@ handler.get(async (req, res) => {
     res.send(allLevels)
 });
 
+handler.use(isAuth)
+
 handler.post(async (req, res) => {
 
     const {
@@ -32,7 +36,8 @@ handler.post(async (req, res) => {
         data: {
             name,
             difficulty: parseInt(difficulty),
-            linesToWin: parseInt(linesToWin)
+            linesToWin: parseInt(linesToWin),
+            userId: req.user.id
         }
     });
 

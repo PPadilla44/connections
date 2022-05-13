@@ -1,36 +1,17 @@
-import { NextPage } from "next";
+import { PrismaClient } from "@prisma/client";
+import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import Layout from "../../components/Layout";
 import LevelItem from "../../components/LevelItem";
 import SearchBar from "../../components/SearchBar";
+import { Level } from "../../types";
+import { convertLevel, getFastestTime } from "../../utils/db";
 
-interface PlayProps {}
+interface PlayProps {
+  levels: Level[];
+}
 
-const pageData = [
-  {
-    id: 1,
-    name: "Parrots in a treeParrots in a treeParrots in a tree",
-    username: "ParotLover123",
-    difficulty: "Hard",
-    time: "23:02.203",
-  },
-  {
-    id: 2,
-    name: "Parrots",
-    username: "Pdsaa",
-    difficulty: "Easy",
-    time: "2.203",
-  },
-  {
-    id: 3,
-    name: "Parrots",
-    username: "Pdsdsfdfddfdsfdfdsdsfdsfdssadsaa",
-    difficulty: "Extreme",
-    time: "23:02.203",
-  },
-];
-
-const Play: NextPage<PlayProps> = () => {
+const Play: NextPage<PlayProps> = ({ levels }) => {
   return (
     <Layout title="Play">
       <div className="w-full flex justify-center bg-darkBlue">
@@ -58,7 +39,7 @@ const Play: NextPage<PlayProps> = () => {
             </div>
 
             <ul className="flex flex-col gap-7">
-              {pageData.map((item) => (
+              {levels.map((item) => (
                 <li key={`${item.name}-${item.id}`}>
                   <LevelItem item={item} />
                 </li>
@@ -69,6 +50,34 @@ const Play: NextPage<PlayProps> = () => {
       </div>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const prisma = new PrismaClient();
+  const levelDocs = await prisma.levels.findMany({
+    include: {
+      users: {
+        select: {
+          userName: true,
+        },
+      },
+      scores: {
+        select: {
+          time: true,
+        },
+      },
+    },
+  });
+  const levels = levelDocs.map(convertLevel);
+  const fastestTime = levels.map(level => getFastestTime(level.scores));
+  console.log(fastestTime);
+  
+
+  return {
+    props: {
+      levels,
+    },
+  };
 };
 
 export default Play;
