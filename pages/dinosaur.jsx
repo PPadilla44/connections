@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Layout from "../components/Layout"
 
-export default function Home({ isLoggedIn }) {
+export default function Dinosaur({ isLoggedIn }) {
 
   const [first, setFirst] = useState(null);
 
