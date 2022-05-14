@@ -68,10 +68,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       },
     },
   });
-  const levels = levelDocs.map(convertLevel);
-  const fastestTime = levels.map(level => getFastestTime(level.scores));
-  console.log(fastestTime);
-  
+  const levels: Level[] = levelDocs.map((level) => {
+    const newLevel = convertLevel(level);
+    newLevel.scores = [getFastestTime(newLevel.scores)];
+    return newLevel;
+  });
 
   return {
     props: {
