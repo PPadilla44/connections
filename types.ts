@@ -36,3 +36,10 @@ export type Level = {
 export type NextApiRequestWithUser = NextApiRequest & {
     user: UserClientType;
 };
+
+export type FilterPlaySearchType = {
+    search?: string;
+    sort?: string;
+    order?: "desc" | "asc";
+
+}
