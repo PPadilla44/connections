@@ -1,10 +1,10 @@
 import nc from "next-connect";
 import { hashSync } from "bcryptjs"
 import { signToken } from "../../../utils/auth";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "../../../utils/db";
 
-const prisma = new PrismaClient();
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 

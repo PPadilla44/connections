@@ -55,7 +55,7 @@ const Leaderboards = () => {
     <Layout title="Leaderboards">
       <div className="flex justify-center bg-darkBlue">
         <div className="max-w-7xl w-full flex mt-12 flex-col gap-10">
-          <SearchBar />
+          <SearchBar route="leaderboards" />
           <ul className="flex flex-col gap-10">
             {data.map((item) => (
               <li key={`${item.name}-${item.id}`} className="w-full">

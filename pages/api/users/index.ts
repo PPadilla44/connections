@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../../utils/db";
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 

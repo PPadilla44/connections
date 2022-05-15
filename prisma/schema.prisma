@@ -25,8 +25,12 @@ model levels {
   linesToWin Int
   createdAt  DateTime? @default(now()) @db.DateTime(0)
   updatedAt  DateTime? @default(now()) @db.DateTime(0)
+  userId     Int
+  users      users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_levels_users1")
   dots       dots[]
   scores     scores[]
+
+  @@index([userId], map: "fk_levels_users1_idx")
 }
 
 model scores {
@@ -50,5 +54,6 @@ model users {
   avatar    String?   @db.VarChar(255)
   createdAt DateTime? @default(now()) @db.DateTime(0)
   updatedAt DateTime? @default(now()) @db.DateTime(0)
+  levels    levels[]
   scores    scores[]
 }

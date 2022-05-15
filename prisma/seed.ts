@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { hashSync } from "bcryptjs"
+import prisma from "../utils/db"
 
-const prisma = new PrismaClient()
 
 async function main() {
 
@@ -33,11 +32,13 @@ async function main() {
                 name: 'level1',
                 difficulty: 1,
                 linesToWin: 20,
+                userId: seededUsers[0].id
             },
             {
                 name: 'level2',
                 difficulty: 2,
                 linesToWin: 40,
+                userId: seededUsers[1].id
             },
         ]
     })
@@ -49,12 +50,12 @@ async function main() {
     await prisma.scores.createMany({
         data: [
             {
-                time: "02:40",
+                time: "02:40.489",
                 levelId: seededLevels[0].id,
                 userId: seededUsers[0].id
             },
             {
-                time: "12:04",
+                time: "12:04.365",
                 levelId: seededLevels[1].id,
                 userId: seededUsers[1].id
             }
