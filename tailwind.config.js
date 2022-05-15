@@ -16,6 +16,9 @@ module.exports = {
       fontFamily: {
         spartan: ["League Spartan", "sans-serif"],
       },
+      backgroundImage: {
+        'hero': "url('/images/hero.jpg')"
+      },
     },
   },
   plugins: [],
