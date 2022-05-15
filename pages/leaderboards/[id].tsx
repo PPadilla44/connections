@@ -61,7 +61,7 @@ const Leaderboard = () => {
     <Layout title="Leaderboards">
       <div className="flex justify-center bg-darkBlue">
         <div className="max-w-7xl w-full flex mt-12 flex-col gap-10">
-          <SearchBar />
+          <SearchBar route="/leaderboards" />
           <LeaderboardItem item={data} showLeaderboardText={false} />
         </div>
       </div>

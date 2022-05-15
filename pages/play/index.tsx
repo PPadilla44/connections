@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react";
-import { PrismaClient } from "@prisma/client";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
@@ -8,7 +7,7 @@ import Layout from "../../components/Layout";
 import LevelItem from "../../components/LevelItem";
 import SearchBar from "../../components/SearchBar";
 import { FilterPlaySearchType, Level } from "../../types";
-import { convertLevel, getFastestTime } from "../../utils/db";
+import { getPlayPageLevels } from "../../utils/db";
 
 interface PlayProps {
   levels: Level[];
@@ -77,60 +76,12 @@ const Play: NextPage<PlayProps> = ({ levels }) => {
   );
 };
 
-type diffOrderOptions = {
-  [key: string]: {
-    [key: string]: "asc" | "desc";
-  };
-};
-
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const prisma = new PrismaClient();
   const search: string = (query.search as string) || "";
   const sort: string = (query.sort as string) || "";
   const orderDir = (query.order as "asc") || "desc";
 
-  const order: diffOrderOptions = {
-    recent: {
-      createdAt: orderDir,
-    },
-    // featured: {
-    //   createdBy: "orderDir",
-    // },
-    alphabetical: {
-      name: orderDir,
-    },
-    difficulty: {
-      difficulty: orderDir,
-    },
-  };
-
-  const orderBy = order.hasOwnProperty(sort) ? order[sort] : {};
-
-  const levelDocs = await prisma.levels.findMany({
-    where: {
-      name: {
-        contains: search,
-      },
-    },
-    orderBy,
-    include: {
-      users: {
-        select: {
-          userName: true,
-        },
-      },
-      scores: {
-        select: {
-          time: true,
-        },
-      },
-    },
-  });
-  const levels: Level[] = levelDocs.map((level) => {
-    const newLevel = convertLevel(level);
-    newLevel.scores = [getFastestTime(newLevel.scores)];
-    return newLevel;
-  });
+  const levels = await getPlayPageLevels(search, sort, orderDir);
 
   return {
     props: {

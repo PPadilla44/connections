@@ -1,5 +1,7 @@
-import { levels, scores } from "@prisma/client";
+import { levels, PrismaClient } from "@prisma/client";
 import { Level } from "../types";
+
+const prisma = new PrismaClient();
 
 const covertDocToObj = (doc: any) => {
     return {
@@ -29,39 +31,58 @@ const convertLevel = (doc: levels): Level => {
     }
 }
 
-const getFastestTime = (scores: scores[]): scores => {
-    let firstTime = scores[0].time
-    let fastestIndex = 0;
-    let fastest = {
-        mins: parseInt(firstTime[0] + firstTime[1]),
-        secs: parseInt(firstTime[3] + firstTime[4]),
-        mills: parseInt(firstTime[6] + firstTime[7] + firstTime[8]),
-    }
-    for (let i = 0; i < scores.length; i++) {
-        const item = scores[i];
-        const time = item.time;
-        const potFastest = {
-            mins: parseInt(time[0] + time[1]),
-            secs: parseInt(time[3] + time[4]),
-            mills: parseInt(time[6] + time[7] + time[8]),
-        }
-        if (potFastest.mins < fastest.mins) {
-            fastest = potFastest;
-            fastestIndex = i;
-            continue;
-        }
-        if (potFastest.secs < fastest.secs) {
-            fastest = potFastest;
-            fastestIndex = i;
-            continue;
-        }
-        if (potFastest.mills < fastest.mills) {
-            fastest = potFastest;
-            fastestIndex = i;
-            continue;
-        }
-    }
-    return scores[fastestIndex];
+type diffOrderOptions = {
+    [key: string]: {
+        [key: string]: "asc" | "desc";
+    };
+};
+
+const getPlayPageLevels = async (searchQuery: string, sort: string, orderDir: "asc" | "desc") => {
+
+    const order: diffOrderOptions = {
+        recent: {
+            createdAt: orderDir,
+        },
+        // featured: {
+        //   createdBy: "orderDir",
+        // },
+        alphabetical: {
+            name: orderDir,
+        },
+        difficulty: {
+            difficulty: orderDir,
+        },
+    };
+
+    const orderBy = order.hasOwnProperty(sort) ? order[sort] : {};
+
+    const levelDocs = await prisma.levels.findMany({
+        where: {
+            name: {
+                contains: searchQuery,
+            },
+        },
+        orderBy,
+        include: {
+            users: {
+                select: {
+                    userName: true,
+                    id: true,
+                },
+            },
+            scores: {
+                select: {
+                    time: true,
+                },
+                orderBy: {
+                    time: "asc",
+                },
+                take: 1,
+            },
+        },
+    });
+    return levelDocs.map(convertLevel);
 }
 
-export { covertDocToObj, convertLevel, getFastestTime };
+export default prisma;
+export { covertDocToObj, convertLevel, getPlayPageLevels };
