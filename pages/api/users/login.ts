@@ -1,10 +1,9 @@
 import nc from "next-connect";
 import bcrpyt from "bcryptjs"
 import { signToken } from "../../../utils/auth";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../utils/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const prisma = new PrismaClient();
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 

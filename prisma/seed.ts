@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { hashSync } from "bcryptjs"
+import prisma from "../utils/db"
 
-const prisma = new PrismaClient()
 
 async function main() {
 
