@@ -29,20 +29,23 @@ const Canvas: React.FC<CanvasProps> = ({
           />
         ))}
         {dots.map((p) => (
-          <circle
-            onClick={() => connectClick(p)}
-            key={p.sequence}
-            r={4}
-            cx={p.x}
-            cy={p.y}
-            fill={"black"}
-            className={`active:stroke-red-600 active:fill-red-600 cursor-pointer ${
-              first && first.sequence === p.sequence
-                ? "stroke-red-600 fill-red-600"
-                : "stroke-black fill-black"
-            } z-20  h-4 w-4 absolute rounded-full`}
-            style={{ left: p.x, top: p.y }}
-          ></circle>
+          <g key={p.sequence}>
+            <circle
+              onClick={() => connectClick(p)}
+              r={4}
+              cx={p.x}
+              cy={p.y}
+              fill={"black"}
+              className={`active:stroke-red-600 active:fill-red-600 cursor-pointer ${
+                first && first.sequence === p.sequence
+                  ? "stroke-red-600 fill-red-600"
+                  : "stroke-black fill-black"
+              } z-20  h-4 w-4 absolute rounded-full`}
+            />
+            <text x={p.x + 10} y={p.y + 5} color="black">
+              {p.sequence}
+            </text>
+          </g>
         ))}
       </svg>
     </div>

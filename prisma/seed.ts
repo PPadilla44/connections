@@ -1,10 +1,17 @@
 import { hashSync } from "bcryptjs"
 import prisma from "../utils/db"
+import { createDino } from "../utils/dino";
 
 
 async function main() {
 
+    await prisma.$connect();
+
+    await prisma.levels.deleteMany();
     await prisma.users.deleteMany();
+    await prisma.scores.deleteMany();
+    await prisma.dots.deleteMany();
+
 
     await prisma.users.createMany({
         data: [
@@ -24,7 +31,6 @@ async function main() {
 
     const seededUsers = await prisma.users.findMany();
 
-    await prisma.levels.deleteMany();
 
     await prisma.levels.createMany({
         data: [
@@ -40,12 +46,17 @@ async function main() {
                 linesToWin: 40,
                 userId: seededUsers[1].id
             },
+            {
+                name: "Dinosaur",
+                difficulty: 3,
+                linesToWin: 77,
+                userId: seededUsers[0].id
+            }
         ]
     })
 
     const seededLevels = await prisma.levels.findMany();
 
-    await prisma.scores.deleteMany();
 
     await prisma.scores.createMany({
         data: [
@@ -63,7 +74,10 @@ async function main() {
     })
 
 
-    await prisma.dots.deleteMany();
+
+    await prisma.dots.createMany({
+        data: createDino(seededLevels[2].id)
+    })
 
     await prisma.dots.createMany({
         data: [
