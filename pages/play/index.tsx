@@ -48,18 +48,21 @@ const Play: NextPage<PlayProps> = ({ levels }) => {
                   { label: "Difficulty", value: "difficulty" },
                 ]}
               />
-              <button
-                onClick={() => {
-                  const dir = order === "desc" ? "asc" : "desc";
-                  filterSearch({ order: dir });
-                }}
-              >
-                <Icon
-                  icon={"fe:drop-down"}
-                  height={30}
-                  vFlip={order === "desc" ? true : false}
-                />
-              </button>
+              <div className="flex items-center">
+                <p className="text-base">Order</p>
+                <button
+                  onClick={() => {
+                    const dir = order === "desc" ? "asc" : "desc";
+                    filterSearch({ order: dir });
+                  }}
+                >
+                  <Icon
+                    icon={"fe:drop-down"}
+                    height={30}
+                    vFlip={order === "desc" ? true : false}
+                  />
+                </button>
+              </div>
             </div>
 
             <ul className="flex flex-col gap-7">
@@ -80,7 +83,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const search: string = (query.search as string) || "";
   const sort: string = (query.sort as string) || "";
   const orderDir = (query.order as "asc") || "desc";
-
+  
   const levels = await getPlayPageLevels(search, sort, orderDir);
 
   return {

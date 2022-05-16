@@ -1,7 +1,7 @@
 import { levels, PrismaClient } from "@prisma/client";
 import { Level } from "../types";
 
-const prisma = new PrismaClient();
+const db = new PrismaClient();
 
 const covertDocToObj = (doc: any) => {
     return {
@@ -56,7 +56,8 @@ const getPlayPageLevels = async (searchQuery: string, sort: string, orderDir: "a
 
     const orderBy = order.hasOwnProperty(sort) ? order[sort] : {};
 
-    const levelDocs = await prisma.levels.findMany({
+    await db.$connect();
+    const levelDocs = await db.levels.findMany({
         where: {
             name: {
                 contains: searchQuery,
@@ -81,8 +82,9 @@ const getPlayPageLevels = async (searchQuery: string, sort: string, orderDir: "a
             },
         },
     });
+    await db.$disconnect();
     return levelDocs.map(convertLevel);
 }
 
-export default prisma;
+export default db;
 export { covertDocToObj, convertLevel, getPlayPageLevels };
