@@ -37,7 +37,7 @@ async function main() {
             {
                 name: 'level1',
                 difficulty: 1,
-                linesToWin: 20,
+                linesToWin: 1,
                 userId: seededUsers[0].id
             },
             {
@@ -49,7 +49,7 @@ async function main() {
             {
                 name: "Dinosaur",
                 difficulty: 3,
-                linesToWin: 77,
+                linesToWin: 76,
                 userId: seededUsers[0].id
             }
         ]
@@ -61,12 +61,12 @@ async function main() {
     await prisma.scores.createMany({
         data: [
             {
-                time: "02:40.489",
+                time: "02:40.48",
                 levelId: seededLevels[0].id,
                 userId: seededUsers[0].id
             },
             {
-                time: "12:04.365",
+                time: "12:04.36",
                 levelId: seededLevels[1].id,
                 userId: seededUsers[1].id
             }

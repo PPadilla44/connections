@@ -84,7 +84,6 @@ const createDino = (levelId: number) => {
 
     const dots = [];
     for (const dot of Object.entries(points)) {
-        console.log(dot);
         dots.push({
             levelId: levelId,
             x: dot[1].x,
@@ -92,12 +91,6 @@ const createDino = (levelId: number) => {
             sequence: parseInt(dot[0])
         })
     }
-    // {
-    //     levelId: seededLevels[0].id,
-    //     x: 20,
-    //     y: 20,
-    //     sequence: levelId
-    // },
     return dots
 }
 

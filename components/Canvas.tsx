@@ -1,6 +1,6 @@
 import { dots } from "@prisma/client";
 import React from "react";
-import { line } from "../pages/play/[id]";
+import { line } from "../types";
 
 interface CanvasProps {
   dots: dots[];
@@ -42,7 +42,7 @@ const Canvas: React.FC<CanvasProps> = ({
                   : "stroke-black fill-black"
               } z-20  h-4 w-4 absolute rounded-full`}
             />
-            <text x={p.x + 10} y={p.y + 5} color="black">
+            <text x={p.x + 10} y={p.y + 5} color="black" className="cursor-default">
               {p.sequence}
             </text>
           </g>
