@@ -1,10 +1,21 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { getError } from "../utils/error";
 import { useAuth } from "./hooks/useAuth";
 
-const SubmitModal = ({ time, levelId }: { time: number; levelId: number }) => {
+interface SubmitModalProps {
+  time: number;
+  levelId: number;
+  hideSubmit: () => void;
+}
+
+const SubmitModal: React.FC<SubmitModalProps> = ({
+  time,
+  levelId,
+  hideSubmit,
+}) => {
   const {
     state: { user },
   } = useAuth();
@@ -24,7 +35,8 @@ const SubmitModal = ({ time, levelId }: { time: number; levelId: number }) => {
 
   const submitToLeaderBoard = async () => {
     if (!isLoggedIn) {
-      alert("Must be logged in");
+      router.push(`/login?redirect=/play/${levelId}`);
+      Cookies.set("time", JSON.stringify({ levelId, time }));
       return;
     }
     setIsLoading(true);
@@ -36,17 +48,19 @@ const SubmitModal = ({ time, levelId }: { time: number; levelId: number }) => {
       });
       if (res.status === 200) {
         router.push(`/leaderboards/${levelId}`);
+        setIsLoading(false);
       }
     } catch (err) {
       console.log(getError(err));
-    } finally {
       setIsLoading(false);
     }
   };
 
   return (
     <div className="bg-black rounded-md p-3 flex flex-col items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-      <p className="absolute right-5 text-gray">hide</p>
+      <button onClick={hideSubmit}>
+        <p className="absolute right-5 text-gray">hide</p>
+      </button>
       <h1>{getStringTime(time)}</h1>
       <button onClick={submitToLeaderBoard}>
         {isLoading ? (

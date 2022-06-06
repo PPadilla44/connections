@@ -10,6 +10,7 @@ import levelReducer, { initialLevelState } from "../../store/level";
 import StartModal from "../../components/StartModal";
 import SubmitModal from "../../components/SubmitModal";
 import Timer from "../../components/Timer";
+import Cookies from "js-cookie";
 
 interface PlayLevelProps {
   level: Level;
@@ -26,12 +27,26 @@ const PlayLevel: NextPage<PlayLevelProps> = ({ level }) => {
     showSubmit,
     isActive,
     isPaused,
+    isCompleted,
     time,
   } = state;
 
   useEffect(() => {
+    const potTime = Cookies.get("time");
+    if (potTime) {
+      const timeObj = JSON.parse(potTime);
+      if (timeObj.levelId === levelId) {
+        dispatch({ type: "COMPLETE" });
+        dispatch({ type: "UPDATE_TIME", payload: timeObj.time });
+      }
+      Cookies.remove("time");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (linesToWin === currentConnections) {
-      dispatch({ type: "FINISH" });
+      dispatch({ type: "COMPLETE" });
     }
   }, [currentConnections, linesToWin]);
 
@@ -52,9 +67,22 @@ const PlayLevel: NextPage<PlayLevelProps> = ({ level }) => {
             {showStart && (
               <StartModal handleClick={() => dispatch({ type: "START" })} />
             )}
-            {showSubmit && <SubmitModal time={time} levelId={levelId} />}
+            {showSubmit && (
+              <SubmitModal
+                time={time}
+                levelId={levelId}
+                hideSubmit={() => dispatch({ type: "HIDE_SUBMIT" })}
+              />
+            )}
           </div>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full relative">
+            <div className="absolute w-full h-full flex justify-center">
+              {isCompleted && !showSubmit && (
+                <button onClick={() => dispatch({ type: "SHOW_SUBMIT" })}>
+                  <h3 className="">Show Submit</h3>
+                </button>
+              )}
+            </div>
             <div className="flex">
               <div className="flex gap-2 w-48">
                 <LineIcon />
