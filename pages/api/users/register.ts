@@ -16,6 +16,7 @@ handler.post(async (req, res) => {
         email,
         password: hashSync(password),
     }
+    await prisma.$connect();
 
     const existingUserName = await prisma.users.findFirst({
         where: {
@@ -29,6 +30,8 @@ handler.post(async (req, res) => {
 
         }
     });
+    await prisma.$disconnect();
+
 
     if (existingUserName) {
         res.status(409).send({
@@ -39,10 +42,12 @@ handler.post(async (req, res) => {
             msg: "Email taken"
         })
     } else {
-
+        await prisma.$connect();
         const newUser = await prisma.users.create({
             data: userData
         })
+        await prisma.$disconnect();
+
 
         const token = signToken(newUser);
 
@@ -51,6 +56,7 @@ handler.post(async (req, res) => {
             id: newUser.id,
             userName: newUser.userName,
             email: newUser.email,
+            isLoggedIn: true
         })
     }
 

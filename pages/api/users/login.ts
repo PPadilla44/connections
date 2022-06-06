@@ -11,7 +11,7 @@ handler.post(async (req, res) => {
 
     const { login, password } = req.body;
 
-
+    await prisma.$connect();
     const user = await prisma.users.findFirst({
         where: {
             OR: [
@@ -20,6 +20,7 @@ handler.post(async (req, res) => {
             ],
         }
     })
+    await prisma.$disconnect();
 
     if (user && bcrpyt.compareSync(password, user.password)) {
         const token = signToken(user);
@@ -28,6 +29,7 @@ handler.post(async (req, res) => {
             id: user.id,
             userName: user.userName,
             email: user.email,
+            isLoggedIn: true
         });
     } else {
         res.status(401).send({ msg: 'Invalid email or password' })
