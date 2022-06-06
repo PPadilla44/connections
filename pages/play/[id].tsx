@@ -16,7 +16,7 @@ interface PlayLevelProps {
 }
 
 const PlayLevel: NextPage<PlayLevelProps> = ({ level }) => {
-  const { id, name, dots, linesToWin } = level;
+  const { id: levelId, name, dots, linesToWin } = level;
   const [state, dispatch] = useReducer(levelReducer, initialLevelState);
   const {
     currentConnections,
@@ -52,7 +52,7 @@ const PlayLevel: NextPage<PlayLevelProps> = ({ level }) => {
             {showStart && (
               <StartModal handleClick={() => dispatch({ type: "START" })} />
             )}
-            {showSubmit && <SubmitModal time={time} id={id} />}
+            {showSubmit && <SubmitModal time={time} levelId={levelId} />}
           </div>
           <div className="flex justify-between w-full">
             <div className="flex">
@@ -78,7 +78,7 @@ const PlayLevel: NextPage<PlayLevelProps> = ({ level }) => {
               <h3>Reset</h3>
             </button>
           </div>
-          <Link href={`/leaderboards/${id}`} passHref>
+          <Link href={`/leaderboards/${levelId}`} passHref>
             <a className="z-20">
               <p className="text-dom">Leaderboard</p>
             </a>

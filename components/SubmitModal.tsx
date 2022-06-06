@@ -1,7 +1,20 @@
-import Link from "next/link";
-import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { getError } from "../utils/error";
+import { useAuth } from "./hooks/useAuth";
 
-const SubmitModal = ({ time, id }: { time: number; id: number }) => {
+const SubmitModal = ({ time, levelId }: { time: number; levelId: number }) => {
+  const {
+    state: { user },
+  } = useAuth();
+
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { isLoggedIn, id: userId } = user;
+
   const getStringTime = (time: number) => {
     const min = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
     const sec = ("0" + Math.floor((time / 1000) % 60)).slice(-2);
@@ -9,8 +22,26 @@ const SubmitModal = ({ time, id }: { time: number; id: number }) => {
     return `${min}:${sec}.${mili}`;
   };
 
-  const submitToLeaderBoard = () => {
-    console.log("SUBMIt");
+  const submitToLeaderBoard = async () => {
+    if (!isLoggedIn) {
+      alert("Must be logged in");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const res = await axios.post(`/api/scores`, {
+        time: getStringTime(time),
+        userId,
+        levelId,
+      });
+      if (res.status === 200) {
+        router.push(`/leaderboards/${levelId}`);
+      }
+    } catch (err) {
+      console.log(getError(err));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -18,7 +49,11 @@ const SubmitModal = ({ time, id }: { time: number; id: number }) => {
       <p className="absolute right-5 text-gray">hide</p>
       <h1>{getStringTime(time)}</h1>
       <button onClick={submitToLeaderBoard}>
-        <h3 className="text-dom">Submit To Leaderboard</h3>
+        {isLoading ? (
+          <h3 className="text-dom">LOADING</h3>
+        ) : (
+          <h3 className="text-dom">Submit To Leaderboard</h3>
+        )}
       </button>
     </div>
   );
