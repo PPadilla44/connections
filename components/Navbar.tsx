@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ route }) => {
   ];
 
   return (
-    <nav className="w-full h-12 bg-black flex items-center justify-center fixed top-0 left-0 z-50">
+    <nav className="w-full px-3 h-12 bg-black flex items-center justify-center fixed top-0 left-0 z-50">
       <div className="max-w-7xl w-full flex justify-between">
         <ul className="flex gap-6 items-center">
           {routes.map((r) => (

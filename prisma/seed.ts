@@ -1,10 +1,17 @@
 import { hashSync } from "bcryptjs"
 import prisma from "../utils/db"
+import { createDino } from "../utils/dino";
 
 
 async function main() {
 
+    await prisma.$connect();
+
+    await prisma.levels.deleteMany();
     await prisma.users.deleteMany();
+    await prisma.scores.deleteMany();
+    await prisma.dots.deleteMany();
+
 
     await prisma.users.createMany({
         data: [
@@ -24,14 +31,13 @@ async function main() {
 
     const seededUsers = await prisma.users.findMany();
 
-    await prisma.levels.deleteMany();
 
     await prisma.levels.createMany({
         data: [
             {
                 name: 'level1',
                 difficulty: 1,
-                linesToWin: 20,
+                linesToWin: 1,
                 userId: seededUsers[0].id
             },
             {
@@ -40,22 +46,27 @@ async function main() {
                 linesToWin: 40,
                 userId: seededUsers[1].id
             },
+            {
+                name: "Dinosaur",
+                difficulty: 3,
+                linesToWin: 76,
+                userId: seededUsers[0].id
+            }
         ]
     })
 
     const seededLevels = await prisma.levels.findMany();
 
-    await prisma.scores.deleteMany();
 
     await prisma.scores.createMany({
         data: [
             {
-                time: "02:40.489",
+                time: "02:40.48",
                 levelId: seededLevels[0].id,
                 userId: seededUsers[0].id
             },
             {
-                time: "12:04.365",
+                time: "12:04.36",
                 levelId: seededLevels[1].id,
                 userId: seededUsers[1].id
             }
@@ -63,7 +74,10 @@ async function main() {
     })
 
 
-    await prisma.dots.deleteMany();
+
+    await prisma.dots.createMany({
+        data: createDino(seededLevels[2].id)
+    })
 
     await prisma.dots.createMany({
         data: [

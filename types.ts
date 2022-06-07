@@ -1,4 +1,4 @@
-import { scores, users } from "@prisma/client";
+import { dots, scores, users } from "@prisma/client";
 import { NextApiRequest } from "next";
 
 export type UserRegiser = {
@@ -31,6 +31,7 @@ export type Level = {
     updatedAt: string;
     users: users;
     scores: scores[];
+    dots: dots[];
 }
 
 export type NextApiRequestWithUser = NextApiRequest & {
@@ -43,3 +44,11 @@ export type FilterPlaySearchType = {
     order?: "desc" | "asc";
 
 }
+
+export type line = {
+    id: string;
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+};

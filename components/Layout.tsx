@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ title, description, children }) => {
         {description && <meta name="description" content={description} />}
       </Head>
       <Navbar route={router.route} />
-      <main className="mt-12 h-[calc(100vh-48px)] bg-darkBlue">{children}</main>
+      <main className="mt-12 h-[calc(100vh-48px)] px-3 bg-darkBlue">{children}</main>
     </div>
   );
 };

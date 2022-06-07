@@ -9,7 +9,7 @@ interface LevelItemProps {
 const LevelItem: React.FC<LevelItemProps> = ({ item }) => {
   const { difficulty, id, name, users, scores } = item;
   const { userName } = users;
-  const { time } = scores[0];
+  const time = scores[0]?.time || "NEW"
 
   return (
     <div>
