@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Level } from "../types";
+import { Level } from "../../types";
 
 interface LevelItemProps {
   item: Level;

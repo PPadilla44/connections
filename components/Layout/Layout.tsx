@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
+const Navbar = dynamic(() => import("../Navbar"), { ssr: false });
 
 interface LayoutProps {
   title?: string;

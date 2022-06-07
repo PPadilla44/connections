@@ -1,6 +1,6 @@
 import { dots } from "@prisma/client";
 import React from "react";
-import { line } from "../types";
+import { line } from "../../types";
 
 interface CanvasProps {
   dots: dots[];

@@ -2,8 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { getError } from "../utils/error";
-import { useAuth } from "./hooks/useAuth";
+import { getError } from "../../utils/error";
+import { useAuth } from "../hooks/useAuth";
 
 interface SubmitModalProps {
   time: number;
