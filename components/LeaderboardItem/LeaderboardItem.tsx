@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Table from "./Table";
+import Table from "../Table";
 
 interface LeaderboardItemProps {
   // REPLACE WITH ACTUAL ITEM PROPS FROM types.ts

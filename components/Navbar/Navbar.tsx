@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import Link from "next/link";
 import React from "react";
-import { useAuth } from "./hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import { Icon } from "@iconify/react";
 
 interface NavbarProps {
